@@ -1,0 +1,24 @@
+{
+  "name": "Módulo 1: Fundamentos de IA para Docentes",
+  "description": "Módulo de formación sobre Inteligencia Artificial para docentes de la Comunitat Valenciana",
+  "homepage": "https://curiousminds123.github.io/Modulo-1/",
+  "version": "1.0.0",
+  "author": "Comunitat Valenciana - Conselleria de Educación",
+  "license": "CC-BY-SA-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Curiousminds123/Modulo-1.git"
+  },
+  "keywords": [
+    "IA",
+    "inteligencia artificial",
+    "educación",
+    "docentes",
+    "formación",
+    "e-learning"
+  ],
+  "pages": {
+    "source": "root",
+    "branch": "main"
+  }
+}
