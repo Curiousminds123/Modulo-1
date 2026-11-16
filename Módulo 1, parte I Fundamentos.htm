@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos de IA para docentes de idiomas</title>
+    <!-- Importar las nuevas fuentes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Variables CSS para el modo claro (único modo ahora) */
+        :root {
+            --bg-color-light: #FAF9F6; /* Muy claro, casi blanco */
+            --text-color-light: #333333; /* Negro/Gris oscuro */
+            --card-bg-light: #ffffff;
+            --primary-purple-light: #5B21B6; /* Morado oscuro para títulos principales */
+            --light-blue-accent: #00B3FF; /* Azul claro para subrayado/subtítulos */
+            --aside-bg-light: #34495E; /* Fondo del aside, mismo color que el inicio del degradado del hero */
+
+            /* Colores específicos */
+            --coral-color: #FF7F50; /* Color coral */
+            --button-main-color: #fabc5f; /* Naranja para botones */
+            --button-hover-color: #e3a956; /* Naranja para hover de botones */
+            --yellow-emoji-color: #FFCD47; /* Emoji de mano amarilla */
+
+            /* Nuevos tamaños de fuente (+2px) */
+            --font-size-xs: calc(0.75rem + 2px); /* 12px + 2px = 14px */
+            --font-size-sm: calc(0.875rem + 2px); /* 14px + 2px = 16px */
+            --font-size-base: calc(1rem + 2px);   /* 16px + 2px = 18px */
+            --font-size-lg: calc(1.125rem + 2px); /* 18px + 2px = 20px */
+            --font-size-xl: calc(1.25rem + 2px);  /* 20px + 2px = 22px */
+            --font-size-2xl: calc(1.5rem + 2px);  /* 24px + 2px = 26px */
+            --font-size-3xl: calc(1.875rem + 2px);/* 30px + 2px = 32px */
+            --font-size-4xl: calc(2.25rem + 2px); /* 36px + 2px = 38px */
+            --font-size-5xl: calc(3rem + 2px);    /* 48px + 2px = 50px */
+            --font-size-6xl: calc(3.75rem + 2px); /* 60px + 2px = 62px */
+        }
+
+        /* Estilos generales para el cuerpo y transiciones */
+        body {
+            font-family: 'Montserrat', sans-serif; /* Fuente principal para el cuerpo de texto */
+            background-color: var(--bg-color-light);
+            color: var(--text-color-light);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+            font-size: var(--font-size-base); /* Aplicar tamaño base al cuerpo */
+        }
+
+        /* Tipografías específicas */
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif; /* Fuente para titulares */
+            font-weight: 700; /* Bold */
+        }
+
+        /* Ajustar clases de Tailwind con las nuevas variables de tamaño de fuente */
+        .text-xs { font-size: var(--font-size-xs); }
+        .text-sm { font-size: var(--font-size-sm); }
+        .text-base { font-size: var(--font-size-base); }
+        .text-lg { font-size: var(--font-size-lg); }
+        .text-xl { font-size: var(--font-size-xl); }
+        .text-2xl { font-size: var(--font-size-2xl); }
+        .text-3xl { font-size: var(--font-size-3xl); }
+        .text-4xl { font-size: var(--font-size-4xl); }
+        .text-5xl { font-size: var(--font-size-5xl); }
+        .text-6xl { font-size: var(--font-size-6xl); }
+
+        /* Estilos del modo claro */
+        .hero-bg {
+            background-image: linear-gradient(to right, #6A40B5, #E85D7B);
+        }
+        .card, .bg-white, .stat-card, .data-quesito-card {
+            background-color: var(--card-bg-light);
+            color: var(--text-color-light);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .main-title-color { color: var(--primary-purple-light); }
+        .subtitle-color { color: var(--light-blue-accent); }
+        .bg-blue-50 { background-color: #e0f2f7; }
+        .border-blue-200 { border-color: #a7d9ef; }
+
+        /* Custom colors provided by the user */
+        .bg-custom-yellow { background-color: #fabc5f; }
+        .text-custom-yellow { color: #fabc5f; }
+        .bg-custom-light-blue { background-color: #5dc5eb; }
+        .text-custom-light-blue { color: #5dc5eb; }
+        .bg-custom-dark-gray { background-color: #282423; }
+        .text-custom-dark-gray { color: #282423; }
+        .bg-custom-lighter-blue { background-color: #8ed2f6; }
+        .text-custom-lighter-blue { color: #8ed2f6; }
+        .bg-custom-off-white { background-color: #ffffff; }
+        .text-custom-off-white { color: #faf9f2; }
+        .bg-custom-peach { background-color: #e49f83; }
+        .text-custom-peach { color: #e49f83; }
+        .bg-custom-lavender { background-color: #d3c2f9; }
+        .text-custom-lavender { color: #d3c2f9; }
+        .bg-custom-brown { background-color: #885b3e; }
+        .text-custom-brown { color: #885b3e; }
+
+        /* Estilos de navegación */
+        .nav-link {
+            font-family: 'Montserrat', sans-serif; /* Fuente para menú */
+            font-weight: 500; /* Medium */
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            background-color: rgba(255, 211, 106, 0.2);
+            color: var(--yellow-emoji-color);
+            border-left-color: var(--yellow-emoji-color);
+        }
+        .content-section {
+            padding-top: 6rem;
+            margin-top: -4rem;
+            cursor: pointer; /* Indica que la sección es clickeable */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .content-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+
+        /* Estilos de tarjetas (cards) */
+        .card {
+            border-radius: 0.75rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .stat-card {
+            background-color: #f4f6f7;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+        .icon-bg {
+            background-color: #d6eaf8;
+            color: #2980b9;
+        }
+
+        /* Estilos de scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color-light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Estilos de enlaces externos */
+        .external-link {
+            color: #2980b9;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        .external-link:hover {
+            color: #1f618d;
+        }
+
+        /* Estilos para detalles (acordeones) */
+        details summary {
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--light-blue-accent);
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+        details summary:hover {
+            text-decoration: underline;
+            color: #1f618d;
+        }
+        details[open] summary {
+            color: #1f618d;
+            font-weight: 600;
+        }
+        details[open] {
+            background-color: #eaf2f8;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+        }
+        .solution-title {
+            color: #2980b9;
+            font-weight: 600;
+        }
+
+        /* Estilos para tarjetas de datos (data-quesito-card) */
+        .data-quesito-card {
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .data-quesito-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .data-quesito-icon {
+            background-color: #e0f2f7;
+            color: #007bff;
+            border-radius: 50%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: var(--font-size-2xl); /* Ajustado a nueva variable */
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 123, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
+        }
+        .data-quesito-value {
+            font-size: var(--font-size-2xl); /* Ajustado a nueva variable */
+            font-weight: bold;
+            color: #1a73e8;
+            margin-bottom: 0.5rem;
+        }
+        .data-quesito-label {
+            font-size: var(--font-size-sm); /* Ajustado a nueva variable */
+            color: #555;
+        }
+        .data-quesito-source {
+            font-size: var(--font-size-xs); /* Ajustado a nueva variable */
+            color: #777;
+            margin-top: 0.5rem;
+        }
+
+        /* Animaciones de la sección hero */
+        .hero-title {
+            animation: fadeInDown 1s ease-out forwards;
+        }
+        .hero-subtitle {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+        .hero-button {
+            animation: fadeInUp 1.2s ease-out forwards;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animación de scroll (opacidad/transform simple) */
+        .fade-in-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Nuevas animaciones */
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .animate-bounce-slow {
+            animation: bounce-slow 2s infinite ease-in-out;
+        }
+
+        @keyframes fade-in-down {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-down {
+            animation: fade-in-down 1s ease-out forwards;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in {
+            animation: fade-in 1s ease-out forwards;
+        }
+
+        /* Estilos para el índice lateral (aside) */
+        aside {
+            background-image: linear-gradient(to right, #6A40B5, #E85D7B);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Ajustes para los enlaces de navegación dentro del aside */
+        aside .nav-link {
+            color: white;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-size: var(--font-size-base); /* Ajustado a nueva variable */
+        }
+
+        aside .nav-link.active, aside .nav-link:hover {
+            background-color: rgba(255, 211, 106, 0.2);
+            color: var(--yellow-emoji-color);
+            border-left-color: var(--yellow-emoji-color);
+        }
+
+        /* Aplicar color coral a los elementos que usaban text-red-500 */
+        .text-coral-custom {
+            color: var(--coral-color);
+        }
+
+        /* Estilos para las nuevas tarjetas de Problemas/Soluciones */
+        .problem-solution-card {
+            background-color: var(--card-bg-light);
+            border-radius: 0.75rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        .problem-solution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .problem-title {
+            font-size: var(--font-size-xl); /* Ajustado a nueva variable */
+            font-weight: 600;
+            color: var(--coral-color);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+        .problem-title i {
+            margin-right: 0.5rem;
+            color: var(--coral-color);
+        }
+        .solution-section {
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        .solution-title-inner {
+            font-size: var(--font-size-lg); /* Ajustado a nueva variable */
+            font-weight: 500;
+            color: var(--light-blue-accent);
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .solution-title-inner i {
+            margin-right: 0.5rem;
+            color: var(--light-blue-accent);
+        }
+        .solution-list {
+            list-style-type: disc;
+            padding-left: 1.25rem;
+            line-height: 1.6;
+            color: #4a5568;
+            font-size: var(--font-size-sm); /* Ajustado a nueva variable */
+        }
+        .solution-list li span {
+            font-weight: 600;
+            color: #2980b9;
+        }
+
+        /* Estilos para los botones con el nuevo color naranja */
+        .btn-orange {
+            background-color: var(--button-main-color);
+            color: var(--text-color-light);
+            font-family: 'Montserrat', sans-serif; /* Fuente para botones */
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: var(--font-size-lg); /* Ajustado a nueva variable */
+        }
+        .btn-orange:hover {
+            background-color: var(--button-hover-color);
+            transform: scale(1.05);
+        }
+
+        /* Estilos del contenedor de Chart.js */
+        .chart-container {
+            position: relative;
+            height: 40vh;
+            width: 80%;
+            margin: 2rem auto;
+            background-color: var(--card-bg-light);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* === ESTILOS PARA EL MODO PRESENTACIÓN (MODAL) === */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: none; /* Oculto por defecto */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg-light);
+            padding: 2rem 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 95%;
+            max-width: 1100px;
+            height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+            z-index: 1001; /* Asegura que esté por encima del contenido */
+        }
+        .modal-close:hover {
+            color: #333;
+            transform: rotate(90deg);
+        }
+        
+        body.modal-open {
+            overflow: hidden; /* Evita el scroll del fondo cuando el modal está abierto */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <header id="hero" class="hero-bg text-white p-6 md:p-12 min-h-[450px] md:min-h-[550px] flex flex-col justify-center items-center text-center rounded-b-3xl shadow-lg relative overflow-hidden">
+        <!-- Superposición para efecto dinámico -->
+        <div class="absolute inset-0 bg-black opacity-30 z-0"></div>
+
+        <div class="max-w-4xl pt-24 md:pt-0 relative z-10">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 hero-title leading-tight drop-shadow-lg" style="font-size: var(--font-size-6xl);">
+                🎓 Fundamentos de IA para docentes de idiomas
+            </h1>
+            <p class="text-lg sm:text-xl md:text-2xl mb-10 hero-subtitle opacity-0 leading-relaxed" style="font-size: var(--font-size-2xl);">
+                Transformando la enseñanza y el aprendizaje: Nuevas competencias y herramientas para docentes en la era digital. <br> <em class="text-xl" style="font-size: var(--font-size-xl);">Curso impartido por Ana H. Iranzo para el Cefire.</em>
+            </p>
+            <a href="#presentacion_genially" onclick="smoothScroll(event, 'presentacion_genially')" class="btn-orange font-bold py-4 px-10 rounded-full shadow-lg text-lg hero-button inline-block opacity-0 transform translate-y-5">
+                Explorar el Reporte <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Contenedor principal para el menú lateral y el contenido, ahora ocupa todo el ancho -->
+    <div class="flex flex-col md:flex-row w-full p-4 md:p-8 space-y-8 md:space-y-0 md:space-x-8">
+        <!-- Menú de navegación lateral, se pega a la izquierda en pantallas medianas y grandes -->
+        <aside class="w-full md:w-1/4 md:sticky md:top-8 p-6 rounded-lg shadow-xl h-fit
+                      bg-gradient-to-r from-[#6A40B5] to-[#E85D7B] text-white">
+            <h2 class="text-xl font-semibold mb-6 flex items-center" style="font-size: var(--font-size-xl);">
+                <i class="fas fa-map-marked-alt mr-3 text-white"></i> Navegación 🗺️
+            </h2>
+            <nav id="main-nav">
+                <ul class="space-y-2">
+                    <li><a href="#presentacion_genially" onclick="setActiveLink(this); smoothScroll(event, 'presentacion_genially')" class="nav-link block py-3 px-4 rounded-lg font-medium hover:pl-6 transform transition-all duration-200 ease-in-out"><i class="fas fa-file-powerpoint mr-2"></i>Presentación Genially 🌟</a></li>
+                    <li><a href="#introduccion" onclick="setActiveLink(this); smoothScroll(event, 'introduccion')" class="nav-link block py-3 px-4 rounded-lg font-medium hover:pl-6 transform transition-all duration-200 ease-in-out"><i class="fas fa-rocket mr-2"></i>1. Introducción 🚀</a></li>
+                    <li><a href="#posibilidades_ia" onclick="setActiveLink(this); smoothScroll(event, 'posibilidades_ia')" class="nav-link block py-3 px-4 rounded-lg font-medium hover:pl-6 transform transition-all duration-200 ease-in-out"><i class="fas fa-sparkles mr-2"></i>2. Posibilidades de la IA en el Aprendizaje de Idiomas ✨</a></li>
+                    <li><a href="#automatizacion" onclick="setActiveLink(this); smoothScroll(event, 'automatizacion')" class="nav-link block py-3 px-4 rounded-lg font-medium hover:pl-6 transform transition-all duration-200 ease-in-out"><i class="fas fa-check-circle mr-2"></i>3. Automatización de Tareas ✅</a></li>
+                    <li><a href="#desafios_soluciones" onclick="setActiveLink(this); smoothScroll(event, 'desafios_soluciones')" class="nav-link block py-3 px-4 rounded-lg font-medium hover:pl-6 transform transition-all duration-200 ease-in-out"><i class="fas fa-lightbulb mr-2"></i>4. Desafíos y Soluciones para la IA en la EOI 💡</a></li>
+                    <li><a href="#rol_docente" onclick="setActiveLink(this); smoothScroll(event, 'rol_docente')" class="nav-link block py-3 px-4 rounded-lg font-medium hover:pl-6 transform transition-all duration-200 ease-in-out"><i class="fas fa-chalkboard-teacher mr-2"></i>5. Nuevo Rol Docente 🧑‍🏫</a></li>
+                    <li><a href="#habilidades_estudiantes" onclick="setActiveLink(this); smoothScroll(event, 'habilidades_estudiantes')" class="nav-link block py-3 px-4 rounded-lg font-medium hover:pl-6 transform transition-all duration-200 ease-in-out"><i class="fas fa-brain mr-2"></i>6. Habilidades del Futuro (Estudiantes) 🧠</a></li>
+                    <li><a href="#redefiniendo_evaluacion" onclick="setActiveLink(this); smoothScroll(event, 'redefiniendo_evaluacion')" class="nav-link block py-3 px-4 rounded-lg font-medium hover:pl-6 transform transition-all duration-200 ease-in-out"><i class="fas fa-edit mr-2"></i>7. Redefiniendo la Evaluación en la Era de la IA 📝</a></li>
+                    <li><a href="#conclusion_final" onclick="setActiveLink(this); smoothScroll(event, 'conclusion_final')" class="nav-link block py-3 px-4 rounded-lg font-medium hover:pl-6 transform transition-all duration-200 ease-in-out"><i class="fas fa-flag-checkered mr-2"></i>8. Conclusión Final: No Perdamos el Norte 🏁</a></li>
+                    <li><a href="#recursos_interes" onclick="setActiveLink(this); smoothScroll(event, 'recursos_interes')" class="nav-link block py-3 px-4 rounded-lg font-medium hover:pl-6 transform transition-all duration-200 ease-in-out"><i class="fas fa-link mr-2"></i>9. Recursos y Enlaces de Interés 🔗</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido principal, ocupa el espacio restante y es responsivo -->
+        <main class="w-full md:w-3/4 space-y-12">
+
+            <!-- Genially Iframe Section (Moved to top) -->
+            <section id="presentacion_genially" class="content-section bg-white p-6 md:p-8 rounded-lg shadow-md fade-in-on-scroll text-center">
+                <h2 class="text-2xl md:text-3xl font-bold main-title-color pt-8 mb-6" style="font-size: var(--font-size-3xl);">Presentación Interactiva Genially 🌟</h2>
+                <div style="width: 100%;">
+                    <div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;">
+                        <iframe title="Inteligencia artificial para la enseñanza de lenguas en línea Preguntar a ChatGPT" frameborder="0" width="1200" height="675" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genially.com/687f48085041b56b4ae33ef0" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe>
+                    </div>
+                </div>
+                <p class="mt-4 text-gray-600 text-sm" style="font-size: var(--font-size-sm);">Explora esta presentación interactiva para complementar la información del reporte.</p>
+            </section>
+
+            <section id="introduccion" class="content-section bg-white p-6 md:p-8 rounded-lg shadow-md fade-in-on-scroll">
+                <h2 class="text-2xl md:text-3xl font-bold main-title-color mb-6" style="font-size: var(--font-size-3xl);">1. Introducción: La IA y el Futuro de la Educación 🚀</h2>
+                <p class="mb-4 text-lg leading-relaxed" style="font-size: var(--font-size-lg);">La Inteligencia Artificial (IA) está redefiniendo el panorama educativo a una velocidad vertiginosa. Lejos de ser una amenaza, la IA ofrece herramientas poderosas para personalizar el aprendizaje, liberar tiempo a los docentes para tareas de mayor valor y preparar a los estudiantes para un futuro cada vez más tecnológico.</p>
+                <p class="mb-4 leading-relaxed" style="font-size: var(--font-size-base);">El rol del docente evoluciona de transmisor de conocimientos a facilitador de experiencias de aprendizaje significativas, mentor y guía en el desarrollo de competencias críticas. La clave es la colaboración humano-IA.</p>
+                <div class="grid md:grid-cols-3 gap-6 mt-6">
+                    <div class="stat-card p-4 rounded-lg text-center flex flex-col items-center justify-center transform hover:scale-105 transition-transform duration-200">
+                        <div class="text-xl font-bold subtitle-color" style="font-size: var(--font-size-xl);">Personalización</div>
+                        <div class="text-3xl font-bold subtitle-color mb-1 animate-bounce" style="font-size: var(--font-size-3xl);">🎯</div>
+                        <p class="text-sm text-gray-600" style="font-size: var(--font-size-sm);">La IA permite adaptar el aprendizaje al ritmo y necesidades de cada estudiante.</p>
+                    </div>
+                    <div class="stat-card p-4 rounded-lg text-center flex flex-col items-center justify-center transform hover:scale-105 transition-transform duration-200">
+                        <div class="text-xl font-bold subtitle-color" style="font-size: var(--font-size-xl);">Eficiencia</div>
+                        <div class="text-3xl font-bold subtitle-color mb-1 animate-spin-slow" style="font-size: var(--font-size-3xl);">⏱️</div>
+                        <p class="text-sm text-gray-600" style="font-size: var(--font-size-sm);">Automatiza tareas administrativas y repetitivas, optimizando el tiempo docente.</p>
+                    </div>
+                    <div class="stat-card p-4 rounded-lg text-center flex flex-col items-center justify-center transform hover:scale-105 transition-transform duration-200">
+                        <div class="text-xl font-bold subtitle-color" style="font-size: var(--font-size-xl);">Nuevas Pedagogías</div>
+                        <div class="text-3xl font-bold subtitle-color mb-1 animate-pulse" style="font-size: var(--font-size-3xl);">💡</div>
+                        <p class="text-sm text-gray-600" style="font-size: var(--font-size-sm);">Impulsa enfoques innovadores como el aprendizaje adaptativo y la gamificación.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="posibilidades_ia" class="content-section bg-white p-6 md:p-8 rounded-lg shadow-md fade-in-on-scroll">
+                <h2 class="text-2xl md:text-3xl font-bold main-title-color mb-6" style="font-size: var(--font-size-3xl);">2. Posibilidades de la IA en el Aprendizaje de Idiomas y cómo facilita la Labor Docente ✨</h2>
+                <p class="mb-4 text-lg leading-relaxed" style="font-size: var(--font-size-lg);">La Inteligencia Artificial abre un abanico de oportunidades para enriquecer el proceso de enseñanza-aprendizaje de idiomas y optimizar el trabajo de los docentes.</p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-700 mb-4 flex items-center" style="font-size: var(--font-size-xl);"><i class="fas fa-chart-bar mr-2 text-green-500"></i>Oportunidades Emergentes:</h4>
+                        <ul class="list-none space-y-3">
+                            <li class="flex items-center p-2 rounded-md hover:bg-blue-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-universal-access"></i></span> Aulas más inclusivas y accesibles.</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-blue-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-chalkboard-teacher"></i></span> Desarrollo profesional docente continuo y personalizado.</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-blue-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-brain"></i></span> Nuevos modelos pedagógicos (aprendizaje basado en proyectos con IA, etc.).</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-blue-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-globe"></i></span> Mayor colaboración e intercambio de buenas prácticas a nivel global.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-700 mb-4 flex items-center" style="font-size: var(--font-size-xl);"><i class="fas fa-cogs mr-2 text-purple-500"></i>Facilitación de la Labor Docente:</h4>
+                        <ul class="list-none space-y-3">
+                            <li class="flex items-center p-2 rounded-md hover:bg-blue-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-file-alt"></i></span> Creación rápida de materiales didácticos adaptados.</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-blue-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-cogs"></i></span> Automatización de tareas repetitivas (corrección, feedback básico).</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-blue-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-chart-line"></i></span> Análisis de progreso de estudiantes para intervenciones personalizadas.</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-blue-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-robot"></i></span> Asistencia en la planificación de clases y diseño de actividades.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 3: Automatización Inteligente de Tareas Docentes ✅ (Ahora Punto 3) -->
+            <section id="automatizacion" class="content-section bg-white p-6 md:p-8 rounded-lg shadow-md fade-in-on-scroll">
+                <h2 class="text-2xl md:text-3xl font-bold main-title-color mb-6" style="font-size: var(--font-size-3xl);">3. Automatización Inteligente de Tareas Docentes ✅</h2>
+                <p class="mb-6 text-lg leading-relaxed" style="font-size: var(--font-size-lg);">La IA puede automatizar tareas rutinarias, permitiendo a los docentes centrarse en la interacción humana, el diseño pedagógico y el apoyo individualizado.</p>
+                <ul class="list-disc list-inside space-y-3 text-gray-700" style="font-size: var(--font-size-base);">
+                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i><strong>Calificación y Feedback Inicial:</strong> Corrección automática de pruebas objetivas y primer borrador de feedback para tareas escritas.</li>
+                    <li class="flex items-start"><i class="fas fa-magic text-purple-500 mr-2 mt-1"></i><strong>Generación de Materiales:</strong> Creación de borradores de lecciones, resúmenes, bancos de preguntas, presentaciones interactivas.</li>
+                    <li class="flex items-start"><i class="fas fa-calendar-alt text-orange-500 mr-2 mt-1"></i><strong>Gestión Administrativa:</strong> Programación de tutorías, recordatorios, seguimiento de asistencia (con herramientas integradas).</li>
+                    <li class="flex items-start"><i class="fas fa-headset text-teal-500 mr-2 mt-1"></i><strong>Soporte Básico al Estudiante:</strong> Chatbots para responder preguntas frecuentes sobre el curso o la plataforma.</li>
+                    <li class="flex items-start"><i class="fas fa-tasks text-indigo-500 mr-2 mt-1"></i><strong>Personalización de Rutas de Aprendizaje:</strong> Sugerencia automática de recursos y actividades según el progreso del estudiante.</li>
+                </ul>
+                <p class="mt-6 bg-blue-50 p-4 rounded-lg text-blue-700 flex items-center animate-fade-in" style="font-size: var(--font-size-base);">
+                    <i class="fas fa-info-circle mr-3 subtitle-color text-xl"></i>Importante: La automatización busca <span class="font-semibold ml-1">aumentar la capacidad del docente</span>, no sustituir su juicio profesional ni la conexión humana esencial en la educación.</p>
+            </section>
+
+            <!-- Sección 4: Desafíos y Soluciones (Ahora Punto 4) -->
+            <section id="desafios_soluciones" class="content-section bg-white p-6 md:p-8 rounded-lg shadow-md fade-in-on-scroll">
+                <h2 class="text-2xl md:text-3xl font-bold main-title-color mb-6" style="font-size: var(--font-size-3xl);">4. Desafíos y Soluciones para la IA en la EOI 💡</h2>
+                <p class="mb-8 text-lg leading-relaxed" style="font-size: var(--font-size-lg);">Es crucial abordar los desafíos de la Inteligencia Artificial de manera proactiva para maximizar sus beneficios y mitigar sus posibles inconvenientes. Aquí se presentan los principales problemas y sus hojas de ruta para la solución.</p>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Problema 1 -->
+                    <div class="problem-solution-card">
+                        <details>
+                            <summary class="problem-title">
+                                <i class="fas fa-wifi problem-icon"></i> Brecha Digital y Equidad
+                            </summary>
+                            <p class="text-gray-700 text-sm mb-3" style="font-size: var(--font-size-sm);">La disparidad en acceso y competencia digital puede marginar a algunos docentes y alumnos.</p>
+                            <div class="solution-section">
+                                <h5 class="solution-title-inner"><i class="fas fa-handshake"></i> Solución: Abordar la Brecha Digital</h5>
+                                <ul class="solution-list">
+                                    <li><span>Diagnóstico:</span> Identificar necesidades de formación.</li>
+                                    <li><span>Formación:</span> Ofrecer talleres prácticos y accesibles.</li>
+                                    <li><span>Recursos:</span> Proporcionar materiales alternativos.</li>
+                                    <li><span>Mentores:</span> Fomentar el apoyo entre colegas.</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Problema 2 -->
+                    <div class="problem-solution-card">
+                        <details>
+                            <summary class="problem-title">
+                                <i class="fas fa-robot problem-icon"></i> Dependencia, Pensamiento Crítico y Plagio
+                            </summary>
+                            <p class="text-gray-700 text-sm mb-3" style="font-size: var(--font-size-sm);">Riesgo de uso excesivo de IA que merme la autonomía y el pensamiento crítico del alumno, así como el riesgo de plagio.</p>
+                            <div class="solution-section">
+                                <h5 class="solution-title-inner"><i class="fas fa-brain"></i> Solución: Fomentar el Pensamiento Crítico y la Originalidad</h5>
+                                <ul class="solution-list">
+                                    <li><span>Uso Consciente:</span> IA como apoyo, no sustitución.</li>
+                                    <li><span>Estrategias:</span> Diseñar actividades con y sin IA.</li>
+                                    <li><span>Análisis:</span> Comparar y justificar sugerencias de IA.</li>
+                                    <li><span>Error:</span> Promover la reflexión sobre el error.</li>
+                                    <li><span>Originalidad:</span> Fomentar la voz personal del alumno.</li>
+                                    <li><span>Proceso:</span> Evaluar el proceso de escritura, no solo el final.</li>
+                                    <li><span>Definir:</span> Establecer directrices sobre uso ético de IA y plagio.</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Problema 3 -->
+                    <div class="problem-solution-card">
+                        <details>
+                            <summary class="problem-title">
+                                <i class="fas fa-bug problem-icon"></i> Calidad y Fiabilidad de Contenidos
+                            </summary>
+                            <p class="text-gray-700 text-sm mb-3" style="font-size: var(--font-size-sm);">La IA puede "alucinar" o producir textos poco naturales. ¿Cómo asegurar la calidad?</p>
+                            <div class="solution-section">
+                                <h5 class="solution-title-inner"><i class="fas fa-check-double"></i> Solución: Verificar Calidad y Fiabilidad</h5>
+                                <ul class="solution-list">
+                                    <li><span>Curación:</span> Siempre revisar y adaptar materiales IA.</li>
+                                    <li><span>Contrastar:</span> Verificar datos con fuentes fiables.</li>
+                                    <li><span>Prompting:</span> Aprender a dar instrucciones precisas.</li>
+                                    <li><span>Limitaciones:</span> Entender que la IA no es perfecta.</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Problema 4 -->
+                    <div class="problem-solution-card">
+                        <details>
+                            <summary class="problem-title">
+                                <i class="fas fa-dollar-sign problem-icon"></i> Costes y Acceso a Herramientas
+                            </summary>
+                            <p class="text-gray-700 text-sm mb-3" style="font-size: var(--font-size-sm);">Las herramientas avanzadas suelen tener coste. ¿Cómo garantizar el acceso equitativo?</p>
+                            <div class="solution-section">
+                                <h5 class="solution-title-inner"><i class="fas fa-sack-dollar"></i> Solución: Gestionar Costes y Acceso</h5>
+                                <ul class="solution-list">
+                                    <li><span>Explorar:</span> Empezar con versiones gratuitas.</li>
+                                    <li><span>Argumentar:</span> Justificar la inversión en beneficios.</li>
+                                    <li><span>Recursos:</span> Impulsar licencias educativas.</li>
+                                    <li><span>Alternativas:</span> Investigar soluciones de bajo coste.</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Problema 5 -->
+                    <div class="problem-solution-card">
+                        <details>
+                            <summary class="problem-title">
+                                <i class="fas fa-balance-scale-right problem-icon"></i> Sesgo Algorítmico y Homogeneización
+                            </summary>
+                            <p class="text-gray-700 text-sm mb-3" style="font-size: var(--font-size-sm);">La IA puede introducir sesgos culturales o lingüísticos, afectando la diversidad.</p>
+                            <div class="solution-section">
+                                <h5 class="solution-title-inner"><i class="fas fa-palette"></i> Solución: Promover Diversidad y Mitigar Sesgos</h5>
+                                <ul class="solution-list">
+                                    <li><span>Conciencia:</span> Entender los posibles sesgos de la IA.</li>
+                                    <li><span>Suplementar:</span> Usar materiales auténticos y variados.</li>
+                                    <li><span>Debate:</span> Discutir la importancia de la diversidad.</li>
+                                    <li><span>Ajuste:</span> Especificar acentos/variedades en prompts.</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Problema 6 -->
+                    <div class="problem-solution-card">
+                        <details>
+                            <summary class="problem-title">
+                                <i class="fas fa-user-secret problem-icon"></i> Privacidad de Datos y RGPD
+                            </summary>
+                            <p class="text-gray-700 text-sm mb-3" style="font-size: var(--font-size-sm);">Preocupación por cómo se usan y almacenan los datos de alumnos en plataformas IA.</p>
+                            <div class="solution-section">
+                                <h5 class="solution-title-inner"><i class="fas fa-lock"></i> Solución: Proteger la Privacidad de Datos</h5>
+                                <ul class="solution-list">
+                                    <li><span>Política:</span> Investigar qué datos recogen las plataformas.</li>
+                                    <li><span>Minimización:</span> Evitar información personal sensible.</li>
+                                    <li><span>Condiciones:</span> Leer atentamente las políticas de privacidad.</li>
+                                    <li><span>Directrices:</span> Impulsar protocolos institucionales.</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section id="rol_docente" class="content-section bg-white p-6 md:p-8 rounded-lg shadow-md fade-in-on-scroll">
+                <h2 class="text-2xl md:text-3xl font-bold main-title-color mb-6" style="font-size: var(--font-size-3xl);">5. El Nuevo Rol del Docente: Habilidades Clave 🧑‍🏫</h2>
+                <p class="mb-6 text-lg leading-relaxed" style="font-size: var(--font-size-lg);">La IA no reemplaza al docente, sino que potencia su rol. Los educadores se convierten en diseñadores de experiencias, mentores y guías críticos en un mundo digital.</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card p-6 border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                        <div class="flex items-center mb-3">
+                            <div class="icon-bg p-3 rounded-full mr-4 shadow-md"><i class="fas fa-drafting-compass fa-lg"></i></div>
+                            <h3 class="text-xl font-semibold subtitle-color" style="font-size: var(--font-size-xl);">Diseñador/a de Experiencias de Aprendizaje</h3>
+                        </div>
+                        <p class="text-gray-600 mb-3 text-sm" style="font-size: var(--font-size-sm);">Crea itinerarios formativos personalizados, integrando herramientas IA y metodologías activas.</p>
+                        <details class="text-sm" style="font-size: var(--font-size-sm);">
+                            <summary>Habilidades Esenciales</summary>
+                            <div class="mt-2 text-gray-500 space-y-1" style="font-size: var(--font-size-sm);">
+                                <p>Curación de contenidos, diseño instruccional, creatividad, manejo de plataformas LMS/LXP.</p>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="card p-6 border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                        <div class="flex items-center mb-3">
+                            <div class="icon-bg p-3 rounded-full mr-4 shadow-md"><i class="fas fa-users fa-lg"></i></div>
+                            <h3 class="text-xl font-semibold subtitle-color" style="font-size: var(--font-size-xl);">Facilitador/a y Mentor/a</h3>
+                        </div>
+                        <p class="text-gray-600 mb-3 text-sm" style="font-size: var(--font-size-sm);">Guía el proceso de aprendizaje, fomenta el pensamiento crítico y ofrece apoyo socioemocional.</p>
+                        <details class="text-sm" style="font-size: var(--font-size-sm);">
+                            <summary>Habilidades Esenciales</summary>
+                            <div class="mt-2 text-gray-500 space-y-1" style="font-size: var(--font-size-sm);">
+                                <p>Inteligencia emocional, comunicación efectiva, escucha activa, empatía, feedback constructivo.</p>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="card p-6 border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                        <div class="flex items-center mb-3">
+                            <div class="icon-bg p-3 rounded-full mr-4 shadow-md"><i class="fas fa-shield-alt fa-lg"></i></div>
+                            <h3 class="text-xl font-semibold subtitle-color" style="font-size: var(--font-size-xl);">Experto/a en Ética y Datos Educativos</h3>
+                        </div>
+                        <p class="text-gray-600 mb-3 text-sm" style="font-size: var(--font-size-sm);">Promueve el uso responsable de la IA, la privacidad de datos y la equidad algorítmica.</p>
+                        <details class="text-sm" style="font-size: var(--font-size-sm);">
+                            <summary>Habilidades Esenciales</summary>
+                            <div class="mt-2 text-gray-500 space-y-1" style="font-size: var(--font-size-sm);">
+                                <p>Alfabetización en datos, conocimiento de regulaciones (RGPD), pensamiento crítico sobre sesgos.</p>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="card p-6 border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                        <div class="flex items-center mb-3">
+                            <div class="icon-bg p-3 rounded-full mr-4 shadow-md"><i class="fas fa-laptop-code fa-lg"></i></div>
+                            <h3 class="text-xl font-semibold subtitle-color" style="font-size: var(--font-size-xl);">Adoptante Tecnológico y Curioso/a Digital</h3>
+                        </div>
+                        <p class="text-gray-600 mb-3 text-sm" style="font-size: var(--font-size-sm);">Explora, evalúa e integra nuevas herramientas IA para enriquecer la práctica pedagógica.</p>
+                        <details class="text-sm" style="font-size: var(--font-size-sm);">
+                            <summary>Habilidades Esenciales</summary>
+                            <div class="mt-2 text-gray-500 space-y-1" style="font-size: var(--font-size-sm);">
+                                <p>Competencia digital avanzada, aprendizaje continuo, adaptabilidad, mentalidad de crecimiento.</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section id="habilidades_estudiantes" class="content-section bg-white p-6 md:p-8 rounded-lg shadow-md fade-in-on-scroll">
+                <h2 class="text-2xl md:text-3xl font-bold main-title-color mb-6" style="font-size: var(--font-size-3xl);">6. Fomentando Habilidades del Futuro en Estudiantes 🧠</h2>
+                <p class="mb-6 text-lg leading-relaxed" style="font-size: var(--font-size-lg);">La educación debe preparar a los estudiantes no solo con conocimientos, sino con las competencias necesarias para prosperar en un mundo impulsado por la IA.</p>
+                <!-- YouTube Iframe Inserted Here -->
+                <div class="my-8 rounded-lg shadow-lg overflow-hidden">
+                    <div class="relative" style="padding-top: 56.25%;"> <!-- 16:9 Aspect Ratio -->
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/tckXTDfniQ0?si=hrYVPVMijNTgfGu8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-700 mb-4 flex items-center" style="font-size: var(--font-size-xl);"><i class="fas fa-cog mr-2 subtitle-color"></i>Habilidades Cognitivas y Digitales:</h4>
+                        <ul class="list-none space-y-3">
+                            <li class="flex items-center p-2 rounded-md hover:bg-green-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-lightbulb"></i></span> Pensamiento crítico y analítico.</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-green-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-paint-brush"></i></span> Creatividad e innovación.</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-green-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-laptop"></i></span> Alfabetización digital y en IA (comprensión y uso ético).</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-green-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-puzzle-piece"></i></span> Resolución de problemas complejos.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-700 mb-4 flex items-center" style="font-size: var(--font-size-xl);"><i class="fas fa-handshake mr-2 text-purple-500"></i>Habilidades Socioemocionales y Adaptativas:</h4>
+                         <ul class="list-none space-y-3">
+                            <li class="flex items-center p-2 rounded-md hover:bg-green-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-users-cog"></i></span> Colaboración y trabajo en equipo.</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-green-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-comments"></i></span> Comunicación efectiva (oral, escrita, digital).</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-green-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-heart"></i></span> Inteligencia emocional y empatía.</li>
+                            <li class="flex items-center p-2 rounded-md hover:bg-green-50 transition duration-200" style="font-size: var(--font-size-base);"><span class="icon-bg text-sm p-3 rounded-full mr-3 shadow-md"><i class="fas fa-seedling"></i></span> Adaptabilidad y aprendizaje continuo (aprender a aprender).</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="redefiniendo_evaluacion" class="content-section bg-white p-6 md:p-8 rounded-lg shadow-md fade-in-on-scroll">
+                <h2 class="text-2xl md:text-3xl font-bold main-title-color mb-6" style="font-size: var(--font-size-3xl);">7. Redefiniendo la Evaluación en la Era de la IA 📝</h2>
+                <p class="mb-4 text-lg leading-relaxed" style="font-size: var(--font-size-lg);">La irrupción de la IA nos obliga a repensar cómo evaluamos el aprendizaje, especialmente en un contexto donde la generación y corrección automática de textos es una realidad. Es fundamental diseñar estrategias que promuevan la originalidad, el pensamiento crítico y la voz personal del estudiante.</p>
+                <h3 class="text-xl font-semibold subtitle-color mb-3 flex items-center" style="font-size: var(--font-size-xl);"><i class="fas fa-exclamation-circle mr-2 text-coral-custom"></i>Desafíos de la Evaluación Tradicional con IA:</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 mb-6" style="font-size: var(--font-size-base);">
+                    <li><strong>Copia de Textos Online:</strong> La facilidad para generar o "mejorar" textos con IA dificulta distinguir el trabajo original del estudiante.</li>
+                    <li><strong>Pérdida de Voz Personal:</strong> Si todos usan la misma IA, las producciones pueden volverse homogéneas, perdiendo la individualidad del alumno.</li>
+                    <li><strong>Reducción del Pensamiento Crítico:</strong> El uso excesivo de la IA para resolver problemas lingüísticos puede mermar la capacidad del estudiante para pensar y corregir por sí mismo.</li>
+                </ul>
+
+                <h3 class="text-xl font-semibold subtitle-color mb-3 flex items-center" style="font-size: var(--font-size-xl);"><i class="fas fa-lightbulb mr-2 text-green-500"></i>Ejemplos de Soluciones y Repensar Ejercicios:</h3>
+                <div class="space-y-4 text-gray-700">
+                    <details class="group p-3 rounded-md border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                        <summary><span class="font-semibold solution-title-inner">Evaluaciones Tradicionales Reforzadas:</span></summary>
+                        <p class="mt-2 text-sm leading-relaxed" style="font-size: var(--font-size-sm);">Mantener exámenes a lápiz y papel o pruebas orales sin tecnología para evaluar las habilidades fundamentales y la comprensión profunda sin asistencia externa.</p>
+                    </details>
+                    <details class="group p-3 rounded-md border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                        <summary><span class="font-semibold solution-title-inner">Proyectos Complejos con IA:</span></summary>
+                        <p class="mt-2 text-sm leading-relaxed" style="font-size: var(--font-size-sm);">Diseñar tareas elaboradas donde los alumnos utilicen la IA como una herramienta de apoyo para investigar, generar ideas, estructurar textos o practicar diálogos, pero donde el resultado final requiera su análisis crítico, creatividad y síntesis personal.</p>
+                    </details>
+                    <details class="group p-3 rounded-md border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                        <summary><span class="font-semibold solution-title-inner">Metaanálisis y Reflexión:</span></summary>
+                        <p class="mt-2 text-sm leading-relaxed" style="font-size: var(--font-size-sm);">Fomentar que los alumnos realicen metaanálisis de sus propias correcciones generadas por IA y de sus conversaciones con estas herramientas, reflexionando sobre sus errores, su progreso y las estrategias de aprendizaje empleadas.</p>
+                    </details>
+                    <details class="group p-3 rounded-md border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                        <summary><span class="font-semibold solution-title-inner">Presentaciones Orales y Mediación:</span></summary>
+                        <p class="mt-2 text-sm leading-relaxed" style="font-size: var(--font-size-sm);">Priorizar actividades de producción oral y de mediación lingüística, donde la interacción humana, la fluidez, la entonación y la capacidad de adaptación en tiempo real son insustituibles.</p>
+                    </details>
+                    <details class="group p-3 rounded-md border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                        <summary><span class="font-semibold solution-title-inner">Definir Plagio por IA:</span></summary>
+                        <p class="mt-2 text-sm leading-relaxed" style="font-size: var(--font-size-sm);">Establecer directrices claras sobre el uso ético de la IA y sus consecuencias, educando a los estudiantes sobre la importancia de la originalidad.</p>
+                    </details>
+                    <details class="group p-3 rounded-md border border-gray-200 hover:border-blue-300 transition-colors duration-200">
+                        <summary><span class="font-semibold solution-title-inner">Ejercicios de "IA-Proof":</span></summary>
+                        <p class="mt-2 text-sm leading-relaxed" style="font-size: var(--font-size-sm);">Crear actividades que requieran pensamiento de orden superior, creatividad, análisis de contexto cultural o personal, o interacción en tiempo real que la IA no pueda replicar fácilmente. Ejemplo: Debates en vivo, creación de historias con elementos inesperados, análisis de sesgos en textos generados por IA.</p>
+                    </details>
+                </div>
+            </section>
+            
+            <section id="conclusion_final" class="content-section bg-white p-6 md:p-8 rounded-lg shadow-md fade-in-on-scroll">
+                <h2 class="text-2xl md:text-3xl font-bold main-title-color mb-6" style="font-size: var(--font-size-3xl);">8. Conclusión Final: No Perdamos el Norte 🏁</h2>
+                <h3 class="text-xl font-semibold subtitle-color mb-3 flex items-center" style="font-size: var(--font-size-xl);"><i class="fas fa-hand-holding-heart mr-2 text-coral-custom"></i>La Tecnología al Servicio del Aprendizaje Humano</h3>
+                <p class="mb-4 text-lg leading-relaxed" style="font-size: var(--font-size-lg);">En esta emocionante era de la Inteligencia Artificial, es crucial recordar una premisa fundamental: <span class="font-bold text-blue-800">la tecnología debe estar al servicio de las personas, no las personas al servicio de la tecnología.</span> Nuestro objetivo primordial en las Escuelas Oficiales de Idiomas es que nuestros alumnos comprendan y se comuniquen eficazmente en un nuevo idioma. Todo lo que facilite este proceso es bienvenido. Sin embargo, no podemos, bajo ningún concepto, saltarnos el proceso de aprendizaje intrínseco.</p>
+                <p class="mb-6 leading-relaxed" style="font-size: var(--font-size-base);">Imaginemos construir una casa sin cimientos sólidos; por muy bonita que sea la fachada, se derrumbará. De la misma manera, si la IA nos lleva al "sedentarismo cognitivo", dejando a generaciones incapaces de pensar, analizar y crear por sí mismas, habremos perdido el norte. Las redes sociales prometieron más conexión y, en muchos casos, trajeron más desconexión. La IA, que viene a traer conocimiento, podría hacernos caer en una dependencia que merme nuestra capacidad crítica.</p>
+                <p class="mb-6 leading-relaxed" style="font-size: var(--font-size-base);"><span class="font-bold text-blue-800">El factor humano</span> continúa siendo, y siempre será, el pilar central de la educación. La IA debe ser una herramienta para potenciarnos, no para sustituirnos. Nuestro criterio pedagógico y nuestra ética deben primar por encima de todo.</p>
+            </section>
+
+            <section id="recursos_interes" class="content-section bg-white p-6 md:p-8 rounded-lg shadow-md fade-in-on-scroll">
+                <h2 class="text-2xl md:text-3xl font-bold main-title-color mb-6" style="font-size: var(--font-size-3xl);">9. Recursos y Enlaces de Interés 🔗</h2>
+                <p class="mb-4 text-lg leading-relaxed" style="font-size: var(--font-size-lg);">Para profundizar en el tema y mantenerte al día, te recomiendo los siguientes recursos:</p>
+                <ul class="list-disc list-inside space-y-3 text-gray-700" style="font-size: var(--font-size-base);">
+                    <li class="hover:text-blue-600 transition-colors duration-200">
+                        <a href="https://www.unesco.org/es/articles/guia-para-el-uso-de-ia-generativa-en-educacion-e-investigacion" target="_blank" class="external-link flex items-center"><i class="fas fa-globe mr-2"></i>Guía de la UNESCO sobre IA en Educación</a>
+                    </li>
+                    <li class="hover:text-blue-600 transition-colors duration-200">
+                        <a href="https://airisk.mit.edu" target="_blank" class="external-link flex items-center"><i class="fas fa-book-reader mr-2"></i>MIT Institute AI Risk Repository</a>
+                    </li>
+                    <li class="hover:text-blue-600 transition-colors duration-200">
+                        <a href="https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX%3A52021PC0206" target="_blank" class="external-link flex items-center"><i class="fas fa-gavel mr-2"></i>Legislación Europea (EU AI Act)</a>
+                    </li>
+                </ul>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="bg-gray-800 text-white text-center p-8 mt-12 rounded-t-xl shadow-inner">
+        <p class="text-lg" style="font-size: var(--font-size-lg);">&copy; 2025 Perspectivas IA en Educación. Ana H. I</p>
+        <p class="text-sm text-gray-400 mt-2" style="font-size: var(--font-size-sm);">Creado por Ana H. Iranzo para el Cefire.</p>
+    </footer>
+
+    <!-- Estructura del Modal/Modo Presentación -->
+    <div id="presentation-modal" class="modal-overlay">
+        <div class="modal-content" id="modal-content-area">
+            <!-- El contenido de la sección se inyectará aquí con JavaScript -->
+        </div>
+        <span class="modal-close" id="modal-close-button">&times;</span>
+    </div>
+
+
+    <script>
+        // Función para el desplazamiento suave de los enlaces de navegación
+        function smoothScroll(event, targetId) {
+            event.preventDefault();
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Establece la clase activa en el enlace de navegación actualmente visible
+        function setActiveLink(element) {
+            const navLinks = document.querySelectorAll('#main-nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        const sections = document.querySelectorAll('section.content-section');
+        const navLinks = document.querySelectorAll('#main-nav a');
+
+        // Observador de intersección para actualizar el enlace de navegación activo y activar animaciones de scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Actualizar enlace de navegación activo
+                    const current = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') && link.getAttribute('href').substring(1) === current) {
+                            link.classList.add('active');
+                        }
+                    });
+                } else {
+                    entry.target.classList.remove('is-visible'); // Opcional: eliminar la clase cuando no está visible
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Establecer enlace activo al cargar la página basado en el hash de la URL o por defecto al primer enlace
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstLink = document.querySelector('#main-nav a');
+            if (firstLink) {
+                if (window.location.hash) {
+                    const activeLinkFromHash = document.querySelector(`#main-nav a[href="${window.location.hash}"]`);
+                    if (activeLinkFromHash) {
+                        setActiveLink(activeLinkFromHash);
+                        smoothScroll(new Event('DOMContentLoaded'), window.location.hash.substring(1));
+                    } else {
+                        setActiveLink(firstLink);
+                    }
+                } else {
+                    setActiveLink(firstLink);
+                }
+            }
+
+            // Aplicar animación inicial de aparición para los elementos del hero
+            document.querySelector('.hero-title').style.opacity = '1';
+            document.querySelector('.hero-title').style.transform = 'translateY(0)';
+            document.querySelector('.hero-subtitle').style.opacity = '1';
+            document.querySelector('.hero-button').style.opacity = '1';
+            document.querySelector('.hero-button').style.transform = 'translateY(0)';
+
+
+            // --- NUEVO SCRIPT PARA EL MODO PRESENTACIÓN ---
+            const modal = document.getElementById('presentation-modal');
+            const modalContentArea = document.getElementById('modal-content-area');
+            const closeModalButton = document.getElementById('modal-close-button');
+            const allSections = document.querySelectorAll('.content-section');
+
+            allSections.forEach(section => {
+                section.addEventListener('click', (event) => {
+                    // No abrir el modal si se hizo clic en un elemento interactivo dentro de la sección
+                    if (event.target.closest('a, button, details, iframe, summary')) {
+                        return;
+                    }
+
+                    // 1. Clonar el contenido de la sección
+                    const contentToDisplay = section.cloneNode(true);
+                    
+                    // Limpiar estilos que no son necesarios en el modal
+                    contentToDisplay.style.paddingTop = '0';
+                    contentToDisplay.style.marginTop = '0';
+                    contentToDisplay.style.cursor = 'default';
+                    contentToDisplay.classList.remove('fade-in-on-scroll', 'is-visible');
+
+
+                    // 2. Limpiar el contenido anterior y añadir el nuevo
+                    modalContentArea.innerHTML = ''; // Limpiar contenido previo
+                    modalContentArea.appendChild(contentToDisplay);
+
+                    // 3. Mostrar el modal
+                    modal.classList.add('active');
+                    document.body.classList.add('modal-open');
+                });
+            });
+
+            // Función para cerrar el modal
+            const closeModal = () => {
+                modal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                // Limpiar el contenido después de la animación para una transición suave
+                setTimeout(() => {
+                    modalContentArea.innerHTML = '';
+                }, 300); // Debe coincidir con la duración de la transición en CSS
+            };
+
+            // Cerrar el modal con el botón
+            closeModalButton.addEventListener('click', closeModal);
+
+            // Cerrar el modal haciendo clic en el fondo oscuro
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Cerrar el modal con la tecla "Escape"
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
